@@ -8,6 +8,7 @@ const defaultRoutes = [
     route: '<path_to_ur_rote>',
   },
 ];
+
 /*
 defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
