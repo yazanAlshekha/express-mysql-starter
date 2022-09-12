@@ -5,7 +5,6 @@ const Joi = require('joi');
 dotenv.config({
   path: path.join(__dirname, '../../.env'),
 });
-console.log('🚀 ~ file: config.js ~ line 6 ~ __dirname', __dirname);
 
 const envVarsSchema = Joi.object()
   .keys({

@@ -37,7 +37,6 @@ const errorHandler = (err, req, res, next) => {
     ...(config.env === 'development' && { stack: err.stack }),
   };
 
-  console.log('🚀 ~ file: error.js ~ line 39 ~ errorHandler ~ message', message);
   res.status(statusCode || 200).send(response);
 };
 

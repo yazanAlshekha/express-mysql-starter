@@ -2,11 +2,11 @@
 version: '3'
 
 services:
-   quonder-api:
+   template-api:
     build:
       context: .
-    container_name: quonder-api
-    hostname: quonder-api
+    container_name: template-api
+    hostname: template-api
     restart: always
     ports:
       - 3000:3000
