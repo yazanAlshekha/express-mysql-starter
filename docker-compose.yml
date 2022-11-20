@@ -1,16 +1,59 @@
-
 version: '3'
 
 services:
-   template-api:
+  plan-service-api:
     build:
       context: .
-    container_name: template-api
-    hostname: template-api
+    depends_on:
+      - maozdb
+    container_name: plan-service-api
+    hostname: plan-service
     restart: always
     ports:
-      - 3000:3000
+      - 3001:3000
       - 5555:5555
+  auth-service-api:
+    build:
+      context: ../MAOZ_AUTH/.
+    depends_on:
+      - maozdb
+    container_name: auth-service-api
+    hostname: auth-service
+    restart: always
+    ports:
+      - 3002:3000
+      - 5556:5555
+  converter-service-api:
+    build:
+      context: ../maoz-converter-service/.
+    image: osgeo/gdal:ubuntu-full-3.6.0
+    ports:
+      - '3000:3000'
+    depends_on:
+      - maozdb
+    volumes:
+      - .:/usr/src/node-app
+    restart: always
 
+  maozdb:
+    image: mysql:latest
+    container_name: maozdb
+    hostname: maozdb
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - ../data/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Thisis@dmin
+      - MYSQL_DATABASE=maoz
+    ports:
+      - 3306:3306
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080
 volumes:
   db_data: {}
+networks:
+  default:
+    driver: bridge

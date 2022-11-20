@@ -11,7 +11,38 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id           String         @id @default(cuid())
+  email        String         @unique
+  phone        String?        @unique
+  name         String?
+  password     String?
+  role         Role
+  authProvider AuthProvider[]
+  isBlocked    Boolean        @default(false)
+  isActive     Boolean        @default(true)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt @db.Date
+}
+
+model AuthProvider {
+  id         Int              @id @default(autoincrement())
+  type       AuthProviderType @default(LOCAL)
+  providerId String?          @db.VarChar(255)
+  userId     String?
+  user       User?            @relation(fields: [userId], references: [id])
+  isActive   Boolean          @default(true)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt @db.Date
+}
+
+enum AuthProviderType {
+  LOCAL
+  APPLE
+  GOOGLE
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
 }
