@@ -10,6 +10,7 @@ const morgan = require('./config/morgan');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
+const routes=require('./routes/v1')
 
 const app = express();
 
@@ -47,7 +48,7 @@ if (config.env === 'production') {
 
 // v1 api routes
 // enable this when u have a router
-// app.use('/api/v1', routes);
+app.use('/api/v1', routes);
 
 app.get('/health-check', (req, res) => {
   res.send('Beatting...🚀');

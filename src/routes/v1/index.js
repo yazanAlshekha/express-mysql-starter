@@ -1,18 +1,22 @@
 const express = require('express');
 
 const router = express.Router();
-
+const studentRouter=require('./studnt.route')
 const defaultRoutes = [
   {
-    path: '/example-route',
-    route: '<path_to_ur_rote>',
+    path: '/student',
+    route: studentRouter,
+  },
+  {
+    path: '/teacher',
+    route: studentRouter,
   },
 ];
 
-/*
+
 defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
 });
 
 module.exports = router;
-*/
+
