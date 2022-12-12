@@ -14,4 +14,14 @@ router.route('/')
 .put(validate(userValidation.getUserList),userController.getUserList)
 .delete(validate(userValidation.getUserList),userController.getUserList)
 
+
+router.route('/users')
+.get(validate(userValidation.getAllUsers),userController.getAllUsers)
+.post(validate(userValidation.getAllUsers),userController.getAllUsersPost)
+// .put(validate(userValidation.getUserList),userController.getUserList)
+// .delete(validate(userValidation.getUserList),userController.getUserList)
+
+
+
+
 module.exports=router

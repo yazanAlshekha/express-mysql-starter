@@ -10,39 +10,91 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String         @id @default(cuid())
-  email        String         @unique
-  phone        String?        @unique
-  name         String?
-  password     String?
-  role         Role
-  authProvider AuthProvider[]
-  isBlocked    Boolean        @default(false)
-  isActive     Boolean        @default(true)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt @db.Date
+generator dbml {
+  provider = "prisma-dbml-generator"
 }
 
-model AuthProvider {
-  id         Int              @id @default(autoincrement())
-  type       AuthProviderType @default(LOCAL)
-  providerId String?          @db.VarChar(255)
-  userId     String?
-  user       User?            @relation(fields: [userId], references: [id])
-  isActive   Boolean          @default(true)
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt @db.Date
+model Instructor{
+id Int @id @default(autoincrement())
+name String 
+instructorRate Decimal? @default(0)
+courses Course[]
 }
 
-enum AuthProviderType {
-  LOCAL
-  APPLE
-  GOOGLE
+model Course{
+  id Int @id @default(autoincrement())
+  courseName String 
+  instructor Instructor @relation(fields: [instructorId], references: [id])
+  instructorId Int
+  courses_student CourseStudent[]
+  comment Comment[]
 }
 
-enum Role {
-  USER
-  ADMIN
-  SUPER_ADMIN
+model Student{
+  id Int @id @default(autoincrement())
+  name String
+  coursesStudent CourseStudent[]
+  comment Comment[]
+
 }
+
+model CourseStudent{
+courses Course @relation(fields: [courseId], references: [id])
+courseId Int
+student Student @relation(fields: [studentId], references: [id])
+studentId Int
+review String?
+rate Float?
+isLiked Boolean @default(false)
+
+@@id( [courseId ,studentId ])
+}
+
+model Comment{
+  id Int @id @default(autoincrement())
+  student Student @relation(fields: [studentId], references: [id]) 
+  studentId Int
+  content String @db.LongText
+  course Course @relation(fields: [courseId], references: [id])
+  courseId Int
+  
+}
+
+// model User {
+//   id           String         @id @default(cuid())
+//   email        String         @unique
+//   phone        String?        @unique
+//   name         String?
+//   password     String?
+//   role         Role
+//   authProvider AuthProvider[]
+//   isBlocked    Boolean        @default(false)
+//   isActive     Boolean        @default(true)
+//   createdAt    DateTime       @default(now())
+//   updatedAt    DateTime       @updatedAt @db.Date
+// }
+
+// model AuthProvider {
+//   id         Int              @id @default(autoincrement())
+//   type       AuthProviderType @default(LOCAL)
+//   providerId String?          @db.VarChar(255)
+//   userId     String?
+//   user       User?            @relation(fields: [userId], references: [id])
+//   isActive   Boolean          @default(true)
+//   createdAt  DateTime         @default(now())
+//   updatedAt  DateTime         @updatedAt @db.Date
+// }
+
+// enum AuthProviderType {
+//   LOCAL
+//   APPLE
+//   GOOGLE
+// }
+
+// enum Role {
+//   USER
+//   ADMIN
+//   SUPER_ADMIN
+// }
+
+

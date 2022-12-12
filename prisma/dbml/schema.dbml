@@ -1,0 +1,59 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Instructor {
+  id Int [pk, increment]
+  name String [not null]
+  instructorRate Decimal [default: 0]
+  courses Course [not null]
+}
+
+Table Course {
+  id Int [pk, increment]
+  courseName String [not null]
+  instructor Instructor [not null]
+  instructorId Int [not null]
+  courses_student CourseStudent [not null]
+  comment Comment [not null]
+}
+
+Table Student {
+  id Int [pk, increment]
+  name String [not null]
+  coursesStudent CourseStudent [not null]
+  comment Comment [not null]
+}
+
+Table CourseStudent {
+  courses Course [not null]
+  courseId Int [not null]
+  student Student [not null]
+  studentId Int [not null]
+  review String
+  rate Float
+  isLiked Boolean [not null, default: false]
+
+  indexes {
+    (courseId, studentId) [pk]
+  }
+}
+
+Table Comment {
+  id Int [pk, increment]
+  student Student [not null]
+  studentId Int [not null]
+  content String [not null]
+  course Course [not null]
+  courseId Int [not null]
+}
+
+Ref: Course.instructorId > Instructor.id
+
+Ref: CourseStudent.courseId > Course.id
+
+Ref: CourseStudent.studentId > Student.id
+
+Ref: Comment.studentId > Student.id
+
+Ref: Comment.courseId > Course.id
