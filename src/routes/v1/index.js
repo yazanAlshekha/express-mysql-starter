@@ -2,14 +2,15 @@ const express = require('express');
 
 const router = express.Router();
 const studentRouter=require('./studnt.route')
+const instructorRouter=require('./instructor.route');
 const defaultRoutes = [
   {
     path: '/student',
     route: studentRouter,
   },
   {
-    path: '/teacher',
-    route: studentRouter,
+    path: '/instructor',
+    route: instructorRouter,
   },
 ];
 
