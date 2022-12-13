@@ -9,9 +9,47 @@ exports.getUserList=async(payload)=>{
 }
 
 exports.getUserListPost=async(payload) => {
-    console.log("🚀 ~ file: user.service.js:12 ~ exports.getUserListPost=async ~ payload", payload)
-
-
+  
     // const userList=await prisma.user.findMany({})
     return payload
+}
+
+exports.enrollCourses = async(payload)=>{
+    const result = await prisma.courseStudent.createMany({
+       data:payload    
+       });
+    return result;
+}
+
+exports.courseList = async(payload)=>{
+    const result = await prisma.course.findMany()
+    return result;
+}
+
+exports.courseDetails = async(payload)=>{
+    const result = await prisma.course.findUnique({
+        where:{
+            id :payload.courseId
+        },
+        select:{
+            courseName:true,
+            comment:true,
+            instructorId:true
+        }
+
+       });
+    return result;
+}
+
+exports.likeCourse = async(payload)=>{
+    const result = await prisma.CourseStudent.update({
+        where:{
+            courseId : payload.courseId,
+            studentId : payload.studentId
+        },
+        data:{
+            isLiked:true
+        }
+    })
+    return result;
 }

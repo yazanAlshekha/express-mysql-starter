@@ -45,3 +45,32 @@ exports.getAllUsersPost=catchAsync(async(req,res)=>{
 
     res.status(httpStatus.USE_PROXY).send(users)
 })
+
+
+
+exports.enrollCourses = catchAsync( async(req,res)=>{
+
+    const payload = pick(req.body,["studentId","courseId"]);
+    const result = await userService.enrollCourses(payload);
+    res.status(httpStatus.CREATED).send("courses has been enrolled");
+})
+
+
+exports.coursesList = catchAsync( async(req,res)=>{
+    const result = await userService.courseList()
+    res.status(httpStatus.OK).send(result)
+})
+
+
+exports.courseDetails = catchAsync( async(req,res)=>{
+    const payload = pick(req.query,["courseId" , "studentId"]);
+    const result = await userService.courseDetails(payload);
+    res.status(httpStatus.OK).send(result);
+})
+
+
+exports.likeCourse = catchAsync( async(req,res)=>{
+    const payload = pick(req.query,["courseId","studentId"]);
+    const result = await userService.likeCourse(payload);
+    res.status(httpStatus.OK).send(result);
+})
