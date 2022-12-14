@@ -1,36 +1,38 @@
-const Joi=require('joi')
+const Joi = require('joi');
 
+exports.enrollCourses = {
+  body: Joi.object().keys({
+    studentId: Joi.number().required(),
+    courseId: Joi.number().required(),
+  }),
+};
 
-exports.getUserList={
-    body:Joi.object().keys({
-        id:Joi.string()
-    })
-}
+exports.courseDetails = {
+  query: Joi.object().keys({
+    courseId: Joi.number().required(),
+  }),
+};
 
+exports.likeCourse = {
+  query: Joi.object().keys({
+    courseId: Joi.number().required(),
+    studentId: Joi.number().required(),
+  }),
+};
 
-exports.getAllUsers={
-    body:Joi.object().keys({
-        id:Joi.number().required(),
-        name:Joi.string().allow('').default('abdallah')
-    })
-}
+exports.commentOnCourse = {
+  body: Joi.object().keys({
+    courseId: Joi.number().required(),
+    studentId: Joi.number().required(),
+    content: Joi.string().required(),
+  }),
+};
 
-exports.enrollCourses={
-    body:Joi.object().keys({
-        studentId :Joi.number().required(),
-        courseId:Joi.number().required(),
-    })
-}
-
-exports.courseDetails={
-    query:Joi.object().keys({
-        courseId:Joi.number().required(),
-    })
-}
-
-exports.likeCourse={
-    query:Joi.object().keys({
-        courseId:Joi.number().required(),
-        studentId:Joi.number().required()
-    })
-}
+exports.rateAndReviewCourse = {
+  body: Joi.object().keys({
+    review: Joi.string(),
+    rate: Joi.number(),
+    studentId: Joi.number().required(),
+    courseId: Joi.number().required(),
+  }),
+};

@@ -6,35 +6,18 @@ const { studentValidation } = require('../../validations/');
 const routePermissions = require('../../constants/route.permissions');
 const router = express.Router();
 
+router.route('/enrollCourses').post(validate(studentValidation.enrollCourses), studentController.enrollCourses);
 
+router.route('/coursesList').get(studentController.coursesList);
 
-router.route('/')
-.get(validate(studentValidation.getUserList),studentController.getUserList)
-.post(validate(studentValidation.getUserList),studentController.getUserList)
-.put(validate(studentValidation.getUserList),studentController.getUserList)
-.delete(validate(studentValidation.getUserList),studentController.getUserList)
+router.route('/courseDetails').get(validate(studentValidation.courseDetails), studentController.courseDetails);
 
+router.route('/likeCourse').put(validate(studentValidation.likeCourse), studentController.likeCourse);
 
-router.route('/users')
-.get(validate(studentValidation.getAllUsers),studentController.getAllUsers)
-.post(validate(studentValidation.getAllUsers),studentController.getAllUsersPost)
-// .put(validate(userValidation.getUserList),userController.getUserList)
-// .delete(validate(userValidation.getUserList),userController.getUserList)
+router.route('/commentOnCourse').post(validate(studentValidation.commentOnCourse), studentController.commentOnCourse);
 
-router.route('/enrollCourses')
-.post(validate(studentValidation.enrollCourses), studentController.enrollCourses)
+router
+  .route('/rateAndReviewCourse')
+  .put(validate(studentValidation.rateAndReviewCourse), studentController.rateAndReviewCourse);
 
-router.route('/coursesList')
-.get(studentController.coursesList)
-
-router.route('/courseDetails')
-.get(validate(studentValidation.courseDetails), studentController.courseDetails)
-
-
-// i have error in this route 
-router.route('/likeCourse')
-.get(validate(studentValidation.likeCourse), studentController.likeCourse)
-
-
-
-module.exports=router
+module.exports = router;
