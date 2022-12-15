@@ -38,6 +38,9 @@ exports.courseLikes = catchAsync(async (req, res) => {
 exports.courseReview = catchAsync(async (req, res) => {
   const payload = pick(req.query, ['courseId']);
   const result = await instructorService.courseReview(payload);
+  // const formatedResult = {
+  //   result
+  // }
   res.status(httpStatus.OK).send(result);
 });
 

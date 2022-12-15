@@ -1,4 +1,3 @@
-const { date } = require('joi');
 const { prisma } = require('./prisma.service');
 
 ///////////////////////////////////////////
@@ -52,6 +51,7 @@ exports.courseLikes = async (payload) => {
       isLiked: true,
     },
     select: {
+      student: true,
       courseId: true,
       studentId: true,
       isLiked: true,
@@ -66,6 +66,7 @@ exports.courseReview = async (payload) => {
       courseId: payload.courseId,
     },
     select: {
+      student: true,
       courseId: true,
       studentId: true,
       review: true,
